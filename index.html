@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Koplak Builder Garage</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- ==================== HALAMAN REGISTER ==================== -->
+    <div id="page-register" class="page active">
+      <div class="auth-container">
+        <div class="auth-card">
+          <div class="logo-section">
+            <img
+              src="logo.png"
+              alt="Koplak Builder Garage Logo"
+              class="main-logo"
+              onerror="this.style.display = 'none'"
+            />
+            <div class="logo-fallback" style="display: none">
+              <i class="fas fa-car-side logo-icon"></i>
+            </div>
+            <h1>Koplak Builder Garage</h1>
+            <p>Modifikasi & Sparepart Terlengkap</p>
+          </div>
+          <h2>📝 Daftar Akun</h2>
+          <form id="form-register">
+            <div class="form-group">
+              <label><i class="fas fa-user"></i> Nama Lengkap</label>
+              <input
+                type="text"
+                id="reg-name"
+                required
+                placeholder="Masukkan nama lengkap"
+              />
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-phone"></i> No. HP</label>
+              <input
+                type="tel"
+                id="reg-phone"
+                required
+                placeholder="08xxxxxxxxxx"
+              />
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-lock"></i> Password</label>
+              <input
+                type="password"
+                id="reg-password"
+                required
+                placeholder="Buat password"
+              />
+            </div>
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-user-plus"></i> Daftar Sekarang
+            </button>
+          </form>
+          <p class="auth-switch">
+            Sudah punya akun?
+            <a href="#" onclick="showPage('page-login')">Login di sini</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HALAMAN LOGIN ==================== -->
+    <div id="page-login" class="page">
+      <div class="auth-container">
+        <div class="auth-card">
+          <div class="logo-section">
+            <img
+              src="logo.png"
+              alt="Koplak Builder Garage Logo"
+              class="main-logo"
+              onerror="this.style.display = 'none'"
+            />
+            <div class="logo-fallback" style="display: none">
+              <i class="fas fa-car-side logo-icon"></i>
+            </div>
+            <h1>Koplak Builder Garage</h1>
+            <p>Modifikasi & Sparepart Terlengkap</p>
+          </div>
+          <h2>🔐 Login Akun</h2>
+          <form id="form-login">
+            <div class="form-group">
+              <label><i class="fas fa-phone"></i> No. HP</label>
+              <input
+                type="tel"
+                id="login-phone"
+                required
+                placeholder="Masukkan no. HP"
+              />
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-lock"></i> Password</label>
+              <input
+                type="password"
+                id="login-password"
+                required
+                placeholder="Masukkan password"
+              />
+            </div>
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+          </form>
+          <p class="auth-switch">
+            Belum punya akun?
+            <a href="#" onclick="showPage('page-register')">Daftar di sini</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HALAMAN KATALOG PRODUK ==================== -->
+    <div id="page-katalog" class="page">
+      <nav class="navbar">
+        <div class="nav-brand">
+          <img
+            src="logo.png"
+            alt="Logo"
+            class="nav-logo"
+            onerror="this.style.display = 'none'"
+          />
+          <i class="fas fa-car-side nav-icon-fallback"></i>
+          <span>Koplak Builder Garage</span>
+        </div>
+        <div class="nav-menu">
+          <a
+            href="#"
+            onclick="showPage('page-katalog')"
+            class="nav-link active"
+          >
+            <i class="fas fa-th-large"></i> Katalog
+          </a>
+          <a
+            href="#"
+            onclick="showPage('page-cart')"
+            class="nav-link cart-link"
+          >
+            <i class="fas fa-shopping-cart"></i> Keranjang
+            <span class="cart-badge" id="cart-badge">0</span>
+          </a>
+          <a href="#" onclick="showPage('page-transaksi')" class="nav-link">
+            <i class="fas fa-receipt"></i> Transaksi
+          </a>
+          <a href="#" onclick="logout()" class="nav-link logout-link">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+      </nav>
+
+      <div class="hero-section">
+        <div class="hero-content">
+          <h1>🏎️ Selamat Datang di Koplak Builder Garage</h1>
+          <p>Temukan sparepart & aksesoris terbaik untuk kendaraanmu!</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="section-header">
+          <h2><i class="fas fa-th-large"></i> Katalog Produk</h2>
+          <div class="filter-bar">
+            <input
+              type="text"
+              id="search-product"
+              placeholder="🔍 Cari produk..."
+              oninput="filterProducts()"
+            />
+            <select id="filter-category" onchange="filterProducts()">
+              <option value="all">Semua Kategori</option>
+              <option value="mesin">Mesin & Performa</option>
+              <option value="eksterior">Eksterior</option>
+              <option value="interior">Interior</option>
+              <option value="kaki-kaki">Kaki-kaki</option>
+              <option value="aksesoris">Aksesoris</option>
+            </select>
+          </div>
+        </div>
+        <div class="product-grid" id="product-grid">
+          <!-- Products will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HALAMAN DAFTAR PRODUK (per kategori) ==================== -->
+    <div id="page-daftar-produk" class="page">
+      <nav class="navbar">
+        <div class="nav-brand">
+          <img
+            src="logo.png"
+            alt="Logo"
+            class="nav-logo"
+            onerror="this.style.display = 'none'"
+          />
+          <i class="fas fa-car-side nav-icon-fallback"></i>
+          <span>Koplak Builder Garage</span>
+        </div>
+        <div class="nav-menu">
+          <a href="#" onclick="showPage('page-katalog')" class="nav-link">
+            <i class="fas fa-arrow-left"></i> Kembali
+          </a>
+          <a
+            href="#"
+            onclick="showPage('page-cart')"
+            class="nav-link cart-link"
+          >
+            <i class="fas fa-shopping-cart"></i> Keranjang
+            <span class="cart-badge" id="cart-badge-2">0</span>
+          </a>
+        </div>
+      </nav>
+      <div class="container">
+        <h2 id="category-title" class="section-title">Daftar Produk</h2>
+        <div class="product-grid" id="category-product-grid"></div>
+      </div>
+    </div>
+
+    <!-- ==================== HALAMAN DETAIL PRODUK ==================== -->
+    <div id="page-detail-produk" class="page">
+      <nav class="navbar">
+        <div class="nav-brand">
+          <img
+            src="logo.png"
+            alt="Logo"
+            class="nav-logo"
+            onerror="this.style.display = 'none'"
+          />
+          <i class="fas fa-car-side nav-icon-fallback"></i>
+          <span>Koplak Builder Garage</span>
+        </div>
+        <div class="nav-menu">
+          <a href="#" onclick="showPage('page-katalog')" class="nav-link">
+            <i class="fas fa-arrow-left"></i> Kembali
+          </a>
+          <a
+            href="#"
+            onclick="showPage('page-cart')"
+            class="nav-link cart-link"
+          >
+            <i class="fas fa-shopping-cart"></i> Keranjang
+            <span class="cart-badge" id="cart-badge-3">0</span>
+          </a>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="detail-product" id="detail-product-content">
+          <!-- Detail loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HALAMAN KERANJANG & CHECKOUT ==================== -->
+    <div id="page-cart" class="page">
+      <nav class="navbar">
+        <div class="nav-brand">
+          <img
+            src="logo.png"
+            alt="Logo"
+            class="nav-logo"
+            onerror="this.style.display = 'none'"
+          />
+          <i class="fas fa-car-side nav-icon-fallback"></i>
+          <span>Koplak Builder Garage</span>
+        </div>
+        <div class="nav-menu">
+          <a href="#" onclick="showPage('page-katalog')" class="nav-link">
+            <i class="fas fa-arrow-left"></i> Belanja Lagi
+          </a>
+        </div>
+      </nav>
+      <div class="container">
+        <h2 class="section-title">
+          <i class="fas fa-shopping-cart"></i> Keranjang & Checkout
+        </h2>
+        <div class="cart-layout">
+          <div class="cart-items" id="cart-items">
+            <!-- Cart items loaded here -->
+          </div>
+          <div class="cart-summary">
+            <h3>📋 Ringkasan Belanja</h3>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="cart-subtotal">Rp 0</span>
+            </div>
+            <div class="summary-row">
+              <span>Ongkos Kirim</span>
+              <span id="cart-shipping">Rp 15.000</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span id="cart-total">Rp 0</span>
+            </div>
+            <button
+              class="btn-primary btn-full"
+              onclick="showPage('page-pembayaran')"
+              id="btn-checkout"
+            >
+              <i class="fas fa-credit-card"></i> Lanjut ke Pembayaran
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HALAMAN PEMBAYARAN ==================== -->
+    <div id="page-pembayaran" class="page">
+      <nav class="navbar">
+        <div class="nav-brand">
+          <img
+            src="logo.png"
+            alt="Logo"
+            class="nav-logo"
+            onerror="this.style.display = 'none'"
+          />
+          <i class="fas fa-car-side nav-icon-fallback"></i>
+          <span>Koplak Builder Garage</span>
+        </div>
+        <div class="nav-menu">
+          <a href="#" onclick="showPage('page-cart')" class="nav-link">
+            <i class="fas fa-arrow-left"></i> Kembali
+          </a>
+        </div>
+      </nav>
+      <div class="container">
+        <h2 class="section-title">
+          <i class="fas fa-credit-card"></i> Halaman Pembayaran
+        </h2>
+        <div class="payment-layout">
+          <div class="payment-methods">
+            <h3>Pilih Metode Pembayaran</h3>
+            <div class="method-group">
+              <h4><i class="fas fa-university"></i> Transfer Bank</h4>
+              <div class="method-options">
+                <label class="method-card" onclick="selectPayment('bca')">
+                  <input type="radio" name="payment" value="bca" />
+                  <div class="method-info">
+                    <strong>BCA</strong>
+                    <small>1234-5678-9012</small>
+                  </div>
+                </label>
+                <label class="method-card" onclick="selectPayment('bni')">
+                  <input type="radio" name="payment" value="bni" />
+                  <div class="method-info">
+                    <strong>BNI</strong>
+                    <small>9876-5432-1098</small>
+                  </div>
+                </label>
+                <label class="method-card" onclick="selectPayment('mandiri')">
+                  <input type="radio" name="payment" value="mandiri" />
+                  <div class="method-info">
+                    <strong>Mandiri</strong>
+                    <small>1100-0999-8877-6</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="method-group">
+              <h4><i class="fas fa-wallet"></i> E-Wallet</h4>
+              <div class="method-options">
+                <label class="method-card" onclick="selectPayment('gopay')">
+                  <input type="radio" name="payment" value="gopay" />
+                  <div class="method-info">
+                    <strong>GoPay</strong>
+                    <small>0857-1234-5678</small>
+                  </div>
+                </label>
+                <label class="method-card" onclick="selectPayment('ovo')">
+                  <input type="radio" name="payment" value="ovo" />
+                  <div class="method-info">
+                    <strong>OVO</strong>
+                    <small>0857-1234-5678</small>
+                  </div>
+                </label>
+                <label class="method-card" onclick="selectPayment('dana')">
+                  <input type="radio" name="payment" value="dana" />
+                  <div class="method-info">
+                    <strong>DANA</strong>
+                    <small>0857-1234-5678</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="payment-total-box">
+              <span>Total Pembayaran:</span>
+              <strong id="payment-total">Rp 0</strong>
+            </div>
+            <button class="btn-primary btn-full" onclick="processPayment()">
+              <i class="fas fa-check-circle"></i> Bayar Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HALAMAN INFO TRANSAKSI ==================== -->
+    <div id="page-transaksi" class="page">
+      <nav class="navbar">
+        <div class="nav-brand">
+          <img
+            src="logo.png"
+            alt="Logo"
+            class="nav-logo"
+            onerror="this.style.display = 'none'"
+          />
+          <i class="fas fa-car-side nav-icon-fallback"></i>
+          <span>Koplak Builder Garage</span>
+        </div>
+        <div class="nav-menu">
+          <a href="#" onclick="showPage('page-katalog')" class="nav-link">
+            <i class="fas fa-arrow-left"></i> Belanja Lagi
+          </a>
+        </div>
+      </nav>
+      <div class="container">
+        <h2 class="section-title">
+          <i class="fas fa-receipt"></i> Info Transaksi
+        </h2>
+        <div id="transaction-list">
+          <!-- Transactions loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== MODAL NOTIFIKASI ==================== -->
+    <div id="modal-overlay" class="modal-overlay" style="display: none">
+      <div class="modal-content" id="modal-content">
+        <!-- Dynamic modal content -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

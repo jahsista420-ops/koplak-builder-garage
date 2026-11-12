@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Koplak Builder Garage</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- LOGIN ADMIN (tanpa hint credentials) -->
+    <div id="admin-login" class="page active">
+      <div class="auth-container">
+        <div class="auth-card admin-card">
+          <div class="logo-section">
+            <img
+              src="logo.png"
+              alt="Koplak Builder Garage Logo"
+              class="main-logo"
+              onerror="this.style.display = 'none'"
+            />
+            <div class="logo-fallback" style="display: none">
+              <i class="fas fa-user-shield logo-icon admin-icon"></i>
+            </div>
+            <h1>Admin Panel</h1>
+            <p>Koplak Builder Garage</p>
+          </div>
+          <h2>🔐 Login Admin</h2>
+          <form id="form-admin-login">
+            <div class="form-group">
+              <label><i class="fas fa-key"></i> Kode Akses</label>
+              <input
+                type="password"
+                id="admin-code"
+                required
+                placeholder="Masukkan kode akses admin"
+              />
+            </div>
+            <button type="submit" class="btn-admin">
+              <i class="fas fa-sign-in-alt"></i> Masuk Panel Admin
+            </button>
+          </form>
+          <p class="auth-switch">
+            <a href="index.html">← Kembali ke Halaman Customer</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD ADMIN -->
+    <div id="admin-dashboard" class="page">
+      <nav class="navbar admin-navbar">
+        <div class="nav-brand">
+          <img
+            src="logo.png"
+            alt="Logo"
+            class="nav-logo"
+            onerror="this.style.display = 'none'"
+          />
+          <i class="fas fa-user-shield nav-icon-fallback"></i>
+          <span>Admin Panel - Koplak Builder Garage</span>
+        </div>
+        <div class="nav-menu">
+          <a
+            href="#"
+            onclick="showAdminTab('tab-products')"
+            class="nav-link active"
+          >
+            <i class="fas fa-box"></i> Produk
+          </a>
+          <a href="#" onclick="showAdminTab('tab-orders')" class="nav-link">
+            <i class="fas fa-shopping-bag"></i> Pesanan
+          </a>
+          <a href="#" onclick="showAdminTab('tab-users')" class="nav-link">
+            <i class="fas fa-users"></i> Pengguna
+          </a>
+          <a href="index.html" class="nav-link">
+            <i class="fas fa-store"></i> Ke Toko
+          </a>
+          <a href="#" onclick="adminLogout()" class="nav-link logout-link">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+      </nav>
+
+      <div class="container admin-container">
+        <!-- TAB PRODUK -->
+        <div id="tab-products" class="admin-tab active">
+          <div class="admin-header">
+            <h2><i class="fas fa-box"></i> Kelola Produk</h2>
+            <button class="btn-primary" onclick="showAddProductForm()">
+              <i class="fas fa-plus"></i> Tambah Produk
+            </button>
+          </div>
+
+          <div
+            id="product-form-container"
+            class="admin-form-container"
+            style="display: none"
+          >
+            <h3 id="product-form-title">Tambah Produk Baru</h3>
+            <form id="form-product">
+              <input type="hidden" id="edit-product-id" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nama Produk</label>
+                  <input
+                    type="text"
+                    id="prod-name"
+                    required
+                    placeholder="Nama produk"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Kategori</label>
+                  <select id="prod-category" required>
+                    <option value="mesin">Mesin & Performa</option>
+                    <option value="eksterior">Eksterior</option>
+                    <option value="interior">Interior</option>
+                    <option value="kaki-kaki">Kaki-kaki</option>
+                    <option value="aksesoris">Aksesoris</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Harga (Rp)</label>
+                  <input
+                    type="number"
+                    id="prod-price"
+                    required
+                    placeholder="Harga dalam rupiah"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Stok</label>
+                  <input
+                    type="number"
+                    id="prod-stock"
+                    required
+                    placeholder="Jumlah stok"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Deskripsi</label>
+                <textarea
+                  id="prod-desc"
+                  rows="3"
+                  placeholder="Deskripsi produk"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>URL Gambar (opsional)</label>
+                <input
+                  type="text"
+                  id="prod-image"
+                  placeholder="https://example.com/image.jpg"
+                />
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                  <i class="fas fa-save"></i> Simpan Produk
+                </button>
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  onclick="hideProductForm()"
+                >
+                  <i class="fas fa-times"></i> Batal
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Gambar</th>
+                  <th>Nama Produk</th>
+                  <th>Kategori</th>
+                  <th>Harga</th>
+                  <th>Stok</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="admin-product-table"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB PESANAN -->
+        <div id="tab-orders" class="admin-tab">
+          <div class="admin-header">
+            <h2><i class="fas fa-shopping-bag"></i> Kelola Pesanan</h2>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID Transaksi</th>
+                  <th>Pelanggan</th>
+                  <th>Produk</th>
+                  <th>Total</th>
+                  <th>Pembayaran</th>
+                  <th>Status</th>
+                  <th>Tanggal</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="admin-order-table"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB PENGGUNA -->
+        <div id="tab-users" class="admin-tab">
+          <div class="admin-header">
+            <h2><i class="fas fa-users"></i> Data Pengguna</h2>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama</th>
+                  <th>No. HP</th>
+                  <th>Tanggal Daftar</th>
+                </tr>
+              </thead>
+              <tbody id="admin-user-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      // ===== KODE AKSES ADMIN (ganti sesuai keinginan) =====
+      const ADMIN_ACCESS_CODE = "koplak2026";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        if (localStorage.getItem("adminLoggedIn") === "true") {
+          showAdminDashboard();
+        }
+      });
+
+      document
+        .getElementById("form-admin-login")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const code = document.getElementById("admin-code").value;
+
+          if (code === ADMIN_ACCESS_CODE) {
+            localStorage.setItem("adminLoggedIn", "true");
+            showAdminDashboard();
+          } else {
+            alert("❌ Kode akses salah!");
+          }
+        });
+
+      function showAdminDashboard() {
+        document.getElementById("admin-login").classList.remove("active");
+        document.getElementById("admin-dashboard").classList.add("active");
+        loadAdminProducts();
+        loadAdminOrders();
+        loadAdminUsers();
+      }
+
+      function adminLogout() {
+        localStorage.removeItem("adminLoggedIn");
+        document.getElementById("admin-dashboard").classList.remove("active");
+        document.getElementById("admin-login").classList.add("active");
+        document.getElementById("admin-code").value = "";
+      }
+
+      function showAdminTab(tabId) {
+        document
+          .querySelectorAll(".admin-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document.getElementById(tabId).classList.add("active");
+        document
+          .querySelectorAll(".admin-navbar .nav-link")
+          .forEach((l) => l.classList.remove("active"));
+        event.target.closest(".nav-link").classList.add("active");
+
+        if (tabId === "tab-products") loadAdminProducts();
+        if (tabId === "tab-orders") loadAdminOrders();
+        if (tabId === "tab-users") loadAdminUsers();
+      }
+
+      function showAddProductForm() {
+        document.getElementById("product-form-container").style.display =
+          "block";
+        document.getElementById("product-form-title").textContent =
+          "Tambah Produk Baru";
+        document.getElementById("form-product").reset();
+        document.getElementById("edit-product-id").value = "";
+      }
+
+      function hideProductForm() {
+        document.getElementById("product-form-container").style.display =
+          "none";
+      }
+
+      document
+        .getElementById("form-product")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const products = JSON.parse(
+            localStorage.getItem("kb_products") || "[]",
+          );
+          const editId = document.getElementById("edit-product-id").value;
+
+          const product = {
+            id: editId || Date.now().toString(),
+            name: document.getElementById("prod-name").value,
+            category: document.getElementById("prod-category").value,
+            price: parseInt(document.getElementById("prod-price").value),
+            stock: parseInt(document.getElementById("prod-stock").value),
+            description: document.getElementById("prod-desc").value,
+            image:
+              document.getElementById("prod-image").value ||
+              "https://via.placeholder.com/300x200/1a1a2e/e94560?text=Koplak+Garage",
+          };
+
+          if (editId) {
+            const index = products.findIndex((p) => p.id === editId);
+            if (index > -1) products[index] = product;
+          } else {
+            products.push(product);
+          }
+
+          localStorage.setItem("kb_products", JSON.stringify(products));
+          hideProductForm();
+          loadAdminProducts();
+          alert("✅ Produk berhasil disimpan!");
+        });
+
+      function editProduct(id) {
+        const products = JSON.parse(
+          localStorage.getItem("kb_products") || "[]",
+        );
+        const product = products.find((p) => p.id === id);
+        if (!product) return;
+
+        document.getElementById("product-form-container").style.display =
+          "block";
+        document.getElementById("product-form-title").textContent =
+          "Edit Produk";
+        document.getElementById("edit-product-id").value = product.id;
+        document.getElementById("prod-name").value = product.name;
+        document.getElementById("prod-category").value = product.category;
+        document.getElementById("prod-price").value = product.price;
+        document.getElementById("prod-stock").value = product.stock;
+        document.getElementById("prod-desc").value = product.description || "";
+        document.getElementById("prod-image").value = product.image || "";
+      }
+
+      function deleteProduct(id) {
+        if (!confirm("Yakin hapus produk ini?")) return;
+        let products = JSON.parse(localStorage.getItem("kb_products") || "[]");
+        products = products.filter((p) => p.id !== id);
+        localStorage.setItem("kb_products", JSON.stringify(products));
+        loadAdminProducts();
+      }
+
+      function loadAdminProducts() {
+        const products = JSON.parse(
+          localStorage.getItem("kb_products") || "[]",
+        );
+        const tbody = document.getElementById("admin-product-table");
+        tbody.innerHTML = products
+          .map(
+            (p, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td><img src="${p.image}" alt="${p.name}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;" onerror="this.src='https://via.placeholder.com/60x40/1a1a2e/e94560?text=KBG'"></td>
+                    <td>${p.name}</td>
+                    <td><span class="badge badge-${p.category}">${getCategoryLabel(p.category)}</span></td>
+                    <td>Rp ${p.price.toLocaleString("id-ID")}</td>
+                    <td>${p.stock}</td>
+                    <td>
+                        <button class="btn-sm btn-edit" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-sm btn-delete" onclick="deleteProduct('${p.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `,
+          )
+          .join("");
+      }
+
+      function loadAdminOrders() {
+        const orders = JSON.parse(localStorage.getItem("kb_orders") || "[]");
+        const tbody = document.getElementById("admin-order-table");
+        tbody.innerHTML =
+          orders.length === 0
+            ? '<tr><td colspan="8" style="text-align:center;color:#888;padding:30px;">Belum ada pesanan</td></tr>'
+            : orders
+                .map(
+                  (o) => `
+                <tr>
+                    <td><strong>${o.id}</strong></td>
+                    <td>${o.customerName}</td>
+                    <td>${o.items.map((i) => i.name + " x" + i.qty).join(", ")}</td>
+                    <td>Rp ${o.total.toLocaleString("id-ID")}</td>
+                    <td>${o.paymentMethod.toUpperCase()}</td>
+                    <td><span class="badge badge-${o.status}">${o.status}</span></td>
+                    <td>${o.date}</td>
+                    <td>
+                        <select onchange="updateOrderStatus('${o.id}', this.value)" class="status-select">
+                            <option value="pending" ${o.status === "pending" ? "selected" : ""}>Pending</option>
+                            <option value="diproses" ${o.status === "diproses" ? "selected" : ""}>Diproses</option>
+                            <option value="dikirim" ${o.status === "dikirim" ? "selected" : ""}>Dikirim</option>
+                            <option value="selesai" ${o.status === "selesai" ? "selected" : ""}>Selesai</option>
+                            <option value="dibatalkan" ${o.status === "dibatalkan" ? "selected" : ""}>Dibatalkan</option>
+                        </select>
+                    </td>
+                </tr>
+            `,
+                )
+                .join("");
+      }
+
+      function updateOrderStatus(orderId, status) {
+        const orders = JSON.parse(localStorage.getItem("kb_orders") || "[]");
+        const order = orders.find((o) => o.id === orderId);
+        if (order) {
+          order.status = status;
+          localStorage.setItem("kb_orders", JSON.stringify(orders));
+        }
+      }
+
+      function loadAdminUsers() {
+        const users = JSON.parse(localStorage.getItem("kb_users") || "[]");
+        const tbody = document.getElementById("admin-user-table");
+        tbody.innerHTML =
+          users.length === 0
+            ? '<tr><td colspan="4" style="text-align:center;color:#888;padding:30px;">Belum ada pengguna</td></tr>'
+            : users
+                .map(
+                  (u, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${u.name}</td>
+                    <td>${u.phone}</td>
+                    <td>${u.registerDate || "-"}</td>
+                </tr>
+            `,
+                )
+                .join("");
+      }
+
+      function getCategoryLabel(cat) {
+        const labels = {
+          mesin: "Mesin & Performa",
+          eksterior: "Eksterior",
+          interior: "Interior",
+          "kaki-kaki": "Kaki-kaki",
+          aksesoris: "Aksesoris",
+        };
+        return labels[cat] || cat;
+      }
+    </script>
+  </body>
+</html>
