@@ -289,9 +289,13 @@ function showProductDetail(id) {
                 <span id="detail-qty">1</span>
                 <button onclick="changeDetailQty(1)">+</button>
             </div>
-            <button class="btn-primary" onclick="addToCartQty('${product.id}')">
+<button class="btn-primary" onclick="addToCartQty('${product.id}')">
                 <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
             </button>
+            <a href="https://wa.me/6289601547124?text=Halo%20Admin%2C%20saya%20ingin%20bertanya%20tentang%20produk%3A%20${product.name}" 
+               class="btn-wa-detail" target="_blank">
+                <i class="fab fa-whatsapp"></i> Tanya via WhatsApp
+            </a>
         </div>
     `;
 
@@ -639,7 +643,13 @@ function loadTransactions() {
             </div>
             <div class="trans-footer">
                 <span>Metode: <strong>${o.paymentMethod.toUpperCase()}</strong></span>
-                <span class="trans-total">Total: Rp ${o.total.toLocaleString("id-ID")}</span>
+<span class="trans-total">Total: Rp ${o.total.toLocaleString("id-ID")}</span>
+            </div>
+            <div class="trans-actions">
+                <a href="https://wa.me/6289601547124?text=Halo%20Admin%2C%20saya%20ingin%20melaporkan%2Fretur%20pesanan%20dengan%20ID%3A%20${o.id}" 
+                   class="btn-wa-report" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Lapor / Retur Barang
+                </a>
             </div>
         </div>
     `,
